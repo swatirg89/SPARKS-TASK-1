@@ -1,0 +1,133 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'media/css/jquery.dataTables.min.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Hello, world!</title>
+  </head>
+  <style>
+    html, body {
+	min-height: 100%;
+}
+body {
+	background: #ff5e63; /* Fallback for browsers that don't support gradients */
+	font-family: "Varela Round", sans-serif;
+	background: linear-gradient(#ff9968, #ff5e63)  no-repeat;
+}
+  </style>
+  <body>
+       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/history">Transactions</a>
+            </li>
+
+
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+
+
+    <div class="container my-5">
+        <table class="table text-center table-hover table-light" id="myTable">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Sender</th>
+                <th scope="col">Receiver</th>
+                <th scope="col">Paid</th>
+                <th scope="col">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+    </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'media/js/jquery.dataTables.min.js' %}"></script>
+    <script>
+
+        if (localStorage.getItem('cart') == null) {
+          var payment = {}
+          var cart = {
+                1:["Kwinal" , 5000,"kwinal@gmail.com"],
+                2:["Jaimit", 6000, "jaimit@gmail.com"],
+                3:["Rashmi", 7000, "rashmi@gmail.com"],
+                4:["Kajal", 8000, "kajal@gmail.com"],
+                5:["Grishma", 8000, "grishma@gmail.com"],
+                6:["Ritika", 8000, "ritika@gmail.com"],
+                7:["Yash", 8000, "yash@gmail.com"],
+                8:["Suraj", 8000, "suraj@gmail.com"],
+                9:["Chirag", 8000, "chirag@gmail.com"],
+                10:["Ranbir", 8000, "ranbir@gmail.com"],
+        }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('payment', JSON.stringify(payment));
+            localStorage.setItem('qtyy', 1);
+        } else {
+            cart = JSON.parse(localStorage.getItem('cart'));
+            var payment = JSON.parse(localStorage.getItem('payment'));
+        }
+
+        var pay = JSON.parse(localStorage.getItem("payment"))
+        console.log(pay)
+        var index=1;
+        for (var item in pay){
+            var frm = cart[payment[item][0]][0]
+            var to = cart[payment[item][1]][0]
+            $('tbody').append(`<tr>
+            <td class="Book_Title">${index}</td>
+            <td class="Book_Title">${frm}</td>
+            <td class="Author">${to}</td>
+            <td class="Author">${payment[item][2]}</td>
+            <td class="Author">${payment[item][3]}</td>
+
+            </tr>`);
+            index=index+1;
+        }
+
+
+
+    </script>
+
+<script>
+  $(document).ready(function(){
+  $("#myTable").dataTable();
+});
+
+</script>
+
+</body>
+</html>

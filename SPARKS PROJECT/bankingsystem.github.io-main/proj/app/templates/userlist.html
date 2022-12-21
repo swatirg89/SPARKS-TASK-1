@@ -1,0 +1,132 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'media/css/jquery.dataTables.min.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Hello, world!</title>
+    <style>
+      html, body {
+	min-height: 100%;
+}
+body {
+	background: #ff5e63; /* Fallback for browsers that don't support gradients */
+	font-family: "Varela Round", sans-serif;
+	background: linear-gradient(#ff9968, #ff5e63)  no-repeat;
+}
+
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/history">Transactions</a>
+            </li>
+
+
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+
+
+    <div class="container my-5">
+        <table class="table text-center table-hover table-light" id="myTable">
+            <thead class="table-warning">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Balance</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'media/js/jquery.dataTables.min.js' %}"></script>
+
+    <script>
+
+        if (localStorage.getItem('cart') == null) {
+          var payment = {}
+            var cart = {
+              1:["Jack" , 5000,"jack@gmail.com"],
+                2:["John", 6000, "john@gmail.com"],
+                3:["Peter", 7000, "peter@gmail.com"],
+                4:["Maria", 8000, "maria@gmail.com"],
+                5:["Jill", 8000, "jill@gmail.com"],
+                6:["Noah", 8000, "noah@gmail.com"],
+                7:["Kwinal", 8000, "kwinal@gmail.com"],
+                8:["Piyush", 8000, "piyush@gmail.com"],
+                9:["Chirag", 8000, "chirag@gmail.com"],
+                10:["Suraj", 8000, "suraj@gmail.com"],
+        }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('payment', JSON.stringify(payment));
+            localStorage.setItem('qtyy', 1);
+        } else {
+            cart = JSON.parse(localStorage.getItem('cart'));
+            var payment = JSON.parse(localStorage.getItem('payment'));
+        }
+
+        var lst = JSON.parse(localStorage.getItem("cart"))
+        console.log(lst)
+        var index=1;
+        for (var item in lst){
+
+            $('tbody').append(`<tr>
+            <td class="Book_Title">${index}</td>
+            <td class="Book_Title">${cart[item][0]}</td>
+            <td class="Author">${cart[item][1]}</td>
+            <td class="Author">${cart[item][2]}</td>
+            <td class="Author"><a class="btn btn-secondary border-shadow update" href="/montrans?id=${index}" role="button">Transact</a></td>
+            </tr>`);
+            index=index+1;
+
+
+
+          }
+
+    </script>
+    <script>
+      $(document).ready(function(){
+      $("#myTable").dataTable();
+    });
+
+    </script>
+  </body>
+</html>
+

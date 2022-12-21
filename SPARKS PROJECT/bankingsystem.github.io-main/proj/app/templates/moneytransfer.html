@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Money Transfer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Varela+Round">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<style>
+html, body {
+	min-height: 100%;
+}
+body {
+	background: #ff5e63; /* Fallback for browsers that don't support gradients */
+	font-family: "Varela Round", sans-serif;
+	background: linear-gradient(#ff9968, #ff5e63)  no-repeat;
+}
+.form-control {
+	border-color: #d7d7d7;
+	box-shadow: none;
+}
+.form-control:focus, .btn:focus {
+	border-color: #a177ff;
+	box-shadow: 0 0 8px #c2a8ff;
+}
+.contact-form {
+	width: 500px;
+	margin: 0 auto;
+	padding: 40px 0;
+}
+.contact-form form {
+	background: #fff;
+	padding: 40px;
+	border-radius: 6px;
+}
+.contact-form h1 {
+	text-align: center;
+	font-size: 50px;
+	margin: 0 0 15px;
+}
+.contact-form .form-group {
+	margin-bottom: 20px;
+}
+.contact-form .form-control, .contact-form .btn  {
+	border-radius: 2px;
+	min-height: 40px;
+	transition: all 0.5s;
+	outline: none;
+}
+.contact-form .btn {
+	background: #a177ff;
+	font-size: 16px;
+	min-height: 50px;
+	border: none;
+}
+.contact-form .btn:hover, .contact-form .btn:focus {
+	background: #8048ff;
+	outline: none;
+}
+.contact-form .btn i {
+	margin-right: 5px;
+}
+.contact-form label {
+	color: #bbb;
+	font-weight: normal;
+}
+.contact-form textarea {
+	resize: vertical;
+}
+.hint-text {
+	font-size: 15px;
+	text-align: center;
+	padding-bottom: 25px;
+	opacity: 0.8;
+}
+</style>
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/history">Transactions</a>
+            </li>
+
+
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+
+<div class="contact-form divpr">
+	<form action="#">
+        <h1>Money Transfer</h1>
+
+		<input type="hidden" class="form-control" value="${id}" id="idf">
+
+    <div class="form-group">
+      <h4>Account Holder :<span class="badge badge-primary" id="fname"></span></h4>
+    </div>
+
+
+        <div hidden id="digital-clock"></div>
+        <div class="text-dark form-group mt-3">
+            <label for="sel">Select user to send money</label>
+                <select id="sel" name="sendTo" class="form-control" >
+                  <option value="-1">Select User</option>
+                </select>
+            </div>
+		<div class="form-group">
+			<label for="amt">Amount</label>
+			<input type="text" class="form-control" id="amt" required>
+		</div>
+
+		<button type="button" onclick="saveData()" id="save_btn" class="btn btn-primary car btn-block"><i class="fa fa-paper-plane"></i> Send Money</button>
+    <!-- <button type="button" onclick="saveData()" id="save_btn" class="btn btn-default car">Submit</button> -->
+  </form>
+</div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        console.log(id)
+
+        if (localStorage.getItem('cart') == null) {
+          var cart = {
+                1:["Kwinal" , 5000,"kwinal@gmail.com"],
+                2:["Jaimit", 6000, "jaimit@gmail.com"],
+                3:["Rashmi", 7000, "rashmi@gmail.com"],
+                4:["Kajal", 8000, "kajal@gmail.com"],
+                5:["Grishma", 8000, "grishma@gmail.com"],
+                6:["Ritika", 8000, "ritika@gmail.com"],
+                7:["Yash", 8000, "yash@gmail.com"],
+                8:["Suraj", 8000, "suraj@gmail.com"],
+                9:["Chirag", 8000, "chirag@gmail.com"],
+                10:["Ranbir", 8000, "ranbir@gmail.com"],
+        }
+
+            var payment = {}
+                localStorage.setItem('cart', JSON.stringify(cart));
+                localStorage.setItem('payment', JSON.stringify(payment));
+                localStorage.setItem('qtyy', 1);
+            } else {
+                cart = JSON.parse(localStorage.getItem('cart'));
+                var payment = JSON.parse(localStorage.getItem('payment'));
+
+            }
+            // console.log(lst)
+            var lst = JSON.parse(localStorage.getItem('cart'));
+                for (item in lst){
+                    if (id == item){
+
+                        var temp = cart[item][0]
+                        document.getElementById('fname').innerHTML = temp;
+                        document.getElementById('idf').value = id;
+                    }
+                }
+
+            var index = 1;
+            for (var item in lst){
+              $('select').append(`<option value="${index}">${cart[item][0]} Balance(${cart[item][1]})</option>`);
+              index=index+1;
+            }
+function getDateTime() {
+        var now     = new Date();
+        var year    = now.getFullYear();
+        var month   = now.getMonth()+1;
+        var day     = now.getDate();
+        var hour    = now.getHours();
+        var minute  = now.getMinutes();
+        var second  = now.getSeconds();
+        if(month.toString().length == 1) {
+             month = '0'+month;
+        }
+        if(day.toString().length == 1) {
+             day = '0'+day;
+        }
+        if(hour.toString().length == 1) {
+             hour = '0'+hour;
+        }
+        if(minute.toString().length == 1) {
+             minute = '0'+minute;
+        }
+        if(second.toString().length == 1) {
+             second = '0'+second;
+        }
+        var dateTime = year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
+         return dateTime;
+    }
+
+    // example usage: realtime clock
+    setInterval(function(){
+        currentTime = getDateTime();
+        document.getElementById("digital-clock").innerHTML = currentTime;
+    }, 1000);
+
+function saveData()
+            {
+
+      $('.divpr').on('click', 'button.car', function() {
+
+            var idf=document.getElementById("idf").value;
+            var sel=document.getElementById("sel").value;
+            var amt=document.getElementById("amt").value;
+            var dt=document.getElementById("digital-clock").innerText;
+            console.log(amt)
+            if (cart[idf][1] < amt){
+              if (window.confirm('insufficient balance'))
+                {
+                  window.location = "/history";
+                }
+            }
+            else{
+
+              var qtyy = parseInt(localStorage.getItem("qtyy"))
+              payment[qtyy] = [idf, sel, amt , dt ];
+              console.log(`qtyy = ${qtyy}`)
+              console.log(`sel = ${sel}`)
+              qtyy= qtyy+1
+              localStorage.setItem('qtyy' , qtyy)
+              localStorage.setItem('payment', JSON.stringify(payment));
+
+
+              cart[idf][1] = parseInt(cart[idf][1]) - parseInt(amt);
+              console.log(`add = ${cart[sel][1]}`)
+              cart[parseInt(sel)][1] = parseInt(cart[sel][1]) + parseInt(amt);
+              localStorage.setItem('cart', JSON.stringify(cart));
+
+              window.location = "/history";
+              window.alert('Payment balance')
+
+            }
+
+    })
+  }
+
+    </script>
